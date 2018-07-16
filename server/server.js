@@ -3,7 +3,7 @@ const path = require('path');
 const http = require('http');
 const socketIO =  require('socket.io');
 
-const {generateMessage} = require('./utils/messages');
+const {generateMessage, generateLocationMessage} = require('./utils/messages');
 
 const PORT = process.env.PORT || 3000;
 var app = express();
@@ -26,12 +26,18 @@ io.on('connection', (socket) => {
     socket.emit('newMessage', generateMessage("Admin","Welcome to chat app!"));
 
     socket.on('createMessage', (message, callback) => {
-        console.log("Create Message", message);
+        // console.log("Create Message", message);
         io.emit("newMessage", generateMessage(message.from,message.text));
 
         callback("Acknowledged, no errors!");
-        
     });
+
+    socket.on("createLocationMessage", (coords) => {
+        // console.log(`Location is: ${coords.latitude}, ${coords.longitude}`);
+        
+        io.emit("newLocationMessage", generateLocationMessage("Admin", coords.latitude, coords.longitude));
+    });
+
 
    /*  socket.emit("newMessage", {
         from: "deep@gmail.com",

@@ -2,7 +2,7 @@ const expect = require('expect');
 
 const {generateMessage} = require('./messages');
 
-describe('Generate Message', (done) => {
+describe('Generate Message', () => {
 
     it('Should generate a message', ()=>{
         var from = "Admin";
