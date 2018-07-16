@@ -25,14 +25,11 @@ io.on('connection', (socket) => {
 
     socket.emit('newMessage', generateMessage("Admin","Welcome to chat app!"));
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log("Create Message", message);
-       /*  io.emit("newMessage", {
-            from: message.from,
-            text: message.text,
-            createdAt: new Date().toDateString()
-        }); */
+        io.emit("newMessage", generateMessage(message.from,message.text));
 
+        callback("Acknowledged, no errors!");
         
     });
 
