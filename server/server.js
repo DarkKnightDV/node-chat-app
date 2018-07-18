@@ -4,7 +4,7 @@ const http = require('http');
 const socketIO =  require('socket.io');
 
 const {Users} = require('./utils/users');
-const {generateMessage, generateLocationMegitssage} = require('./utils/messages');
+const {generateMessage, generateLocationMessage} = require('./utils/messages');
 const {isRealString} = require('./utils/validation');
 
 const PORT = process.env.PORT || 3000;
