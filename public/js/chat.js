@@ -2,7 +2,16 @@ var socket = io();
 
 socket.on("connect", function () {
     console.log("Server connected");
+    var params = $.deparam(window.location.search);
 
+    socket.emit('join', params, function (err){
+        if(err) {
+            alert(err);
+            window.location.href = "/";
+        } else {
+            console.log("No Error");
+        }
+    });
    /*  socket.emit('createMessage', {
         from: "jen@gmail.com",
         text: "Can we meet tomorrow instead?"
@@ -25,6 +34,16 @@ socket.on('newMessage', function(message){
     $("#messages").append(html);
     scrollToBottom ();
 }) ;
+
+socket.on('updateUsersList', function(usersArray){
+    var ol = $("<ol></ol>");
+    usersArray.forEach(function (name) {
+        var li = $('<li></li>');
+        $(li).text(name);
+        $(ol).append(li);
+    });
+    $("#users").html(ol);
+});
 
 socket.on("newLocationMessage", function (message){
     // var li = $("<li></li>");
