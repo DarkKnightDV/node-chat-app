@@ -46,13 +46,17 @@ io.on('connection', (socket) => {
 
     socket.on('createMessage', (message, callback) => {
         var user = users.getUser(socket.id);
-        io.to(user.room).emit("newMessage", generateMessage(user.name,message.text));
+        if(user) {
+            io.to(user.room).emit("newMessage", generateMessage(user.name,message.text));
+        }
         callback("Acknowledged, no errors!");
     });
 
     socket.on("createLocationMessage", (coords) => {
         var user = users.getUser(socket.id);
-        io.to(user.room).emit("newLocationMessage", generateLocationMessage(user.name, coords.latitude, coords.longitude));
+        if(user) {
+            io.to(user.room).emit("newLocationMessage", generateLocationMessage(user.name, coords.latitude, coords.longitude));
+        }
     });
 });
 
