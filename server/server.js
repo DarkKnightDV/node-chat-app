@@ -4,7 +4,7 @@ const http = require('http');
 const socketIO =  require('socket.io');
 
 const {Users} = require('./utils/users');
-const {generateMessage, generateLocationMessage} = require('./utils/messages');
+const {generateMessage, generateLocationMegitssage} = require('./utils/messages');
 const {isRealString} = require('./utils/validation');
 
 const PORT = process.env.PORT || 3000;
@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
 
     socket.on("createLocationMessage", (coords) => {
         var user = users.getUser(socket.id);
-        io.to(user.name).emit("newLocationMessage", generateLocationMessage(user.name, coords.latitude, coords.longitude));
+        io.to(user.room).emit("newLocationMessage", generateLocationMessage(user.name, coords.latitude, coords.longitude));
     });
 });
 
